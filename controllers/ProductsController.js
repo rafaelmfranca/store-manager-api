@@ -16,8 +16,17 @@ router
   )
   .post(
     validateProduct,
-    rescue(async (req, res) => {
-      res.status(StatusCodes.CREATED).end();
+    rescue(async (req, res, next) => {
+      const newProduct = await ProductsService.create(req.body);
+
+      if (!newProduct) {
+        return next({
+          status: StatusCodes.CONFLICT,
+          message: 'Product already exists',
+        });
+      }
+
+      res.status(StatusCodes.CREATED).json(newProduct);
     }),
   );
 

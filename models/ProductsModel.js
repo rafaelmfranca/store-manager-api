@@ -8,4 +8,15 @@ function getById(id) {
   return connection.query('SELECT * FROM products WHERE id = ?', id);
 }
 
-module.exports = { getAll, getById };
+function getByName(name) {
+  return connection.query('SELECT * FROM products WHERE name = ?', name);
+}
+
+function create(name, quantity) {
+  return connection.query(
+    'INSERT INTO products (name, quantity) VALUES (?, ?)',
+    [name, quantity],
+  );
+}
+
+module.exports = { getAll, getById, getByName, create };
