@@ -4,4 +4,8 @@ function getAll() {
   return connection.query('SELECT * FROM products ORDER BY id');
 }
 
-module.exports = { getAll };
+function getById(id) {
+  return connection.query('SELECT * FROM products WHERE id = ?', id);
+}
+
+module.exports = { getAll, getById };

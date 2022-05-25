@@ -4,4 +4,8 @@ function getAll() {
   return ProductModel.getAll();
 }
 
-module.exports = { getAll };
+function getById(id) {
+  return ProductModel.getById(id);
+}
+
+module.exports = { getAll, getById };

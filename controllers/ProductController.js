@@ -12,4 +12,19 @@ router.route('/').get(
   }),
 );
 
+router.route('/:id').get(
+  rescue(async (req, res, next) => {
+    const [product] = await ProductService.getById(req.params.id);
+
+    if (!product.length) {
+      return next({
+        status: StatusCodes.NOT_FOUND,
+        message: 'Product not found',
+      });
+    }
+
+    return res.status(StatusCodes.OK).json(product[0]);
+  }),
+);
+
 module.exports = router;
