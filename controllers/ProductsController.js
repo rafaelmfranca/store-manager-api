@@ -26,7 +26,7 @@ router
         });
       }
 
-      res.status(StatusCodes.CREATED).json(newProduct);
+      return res.status(StatusCodes.CREATED).json(newProduct);
     }),
   );
 
@@ -59,7 +59,21 @@ router
         });
       }
 
-      res.status(StatusCodes.OK).json(updatedProduct);
+      return res.status(StatusCodes.OK).json(updatedProduct);
+    }),
+  )
+  .delete(
+    rescue(async (req, res, next) => {
+      const response = await ProductsService.remove(req.params.id);
+
+      if (!response) {
+        return next({
+          status: StatusCodes.NOT_FOUND,
+          message: 'Product not found',
+        });
+      }
+
+      return res.status(StatusCodes.NO_CONTENT).end();
     }),
   );
 

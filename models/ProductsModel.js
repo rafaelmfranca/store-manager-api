@@ -26,4 +26,8 @@ function update(id, name, quantity) {
   );
 }
 
-module.exports = { getAll, getById, getByName, create, update };
+function remove(id) {
+  return connection.query('DELETE FROM products WHERE id = ?', id);
+}
+
+module.exports = { getAll, getById, getByName, create, update, remove };

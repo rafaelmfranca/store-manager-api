@@ -36,4 +36,14 @@ async function update(id, { name, quantity }) {
   };
 }
 
-module.exports = { getAll, getById, create, update };
+async function remove(id) {
+  const [product] = await ProductsModel.getById(id);
+
+  if (!product.length) return false;
+
+  await ProductsModel.remove(id);
+
+  return true;
+}
+
+module.exports = { getAll, getById, create, update, remove };
