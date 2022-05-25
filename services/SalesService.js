@@ -16,6 +16,7 @@ async function getAll() {
 
 async function getById(id) {
   const [sale] = await SalesModel.getById(id);
+
   if (!sale.length) return null;
 
   return sale.map(normalize);
