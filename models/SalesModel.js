@@ -13,7 +13,7 @@ function getAll() {
 function getById(id) {
   return connection.query(`
     SELECT 
-      s.id, s.date, sp.product_id, sp.quantity
+      s.date, sp.product_id, sp.quantity
     FROM
       sales AS s
     INNER JOIN
