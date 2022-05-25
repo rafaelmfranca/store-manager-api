@@ -1,20 +1,20 @@
 const express = require('express');
 const rescue = require('express-rescue');
 const { StatusCodes } = require('http-status-codes');
-const { ProductService } = require('../services');
+const { ProductsService } = require('../services');
 
 const router = express.Router();
 
 router.route('/').get(
   rescue(async (_req, res) => {
-    const [products] = await ProductService.getAll();
+    const [products] = await ProductsService.getAll();
     return res.status(StatusCodes.OK).json(products);
   }),
 );
 
 router.route('/:id').get(
   rescue(async (req, res, next) => {
-    const [product] = await ProductService.getById(req.params.id);
+    const [product] = await ProductsService.getById(req.params.id);
 
     if (!product.length) {
       return next({
