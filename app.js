@@ -1,5 +1,6 @@
 const express = require('express');
 const error = require('./middlewares/error');
+const router = require('./routers');
 
 const app = express();
 
@@ -9,6 +10,8 @@ app.use(express.json());
 app.get('/', (_request, response) => {
   response.send();
 });
+
+app.use('/', router);
 
 app.use(error);
 
