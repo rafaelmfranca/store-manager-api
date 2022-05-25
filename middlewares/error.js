@@ -3,7 +3,7 @@ const { StatusCodes } = require('http-status-codes');
 function error(err, _req, res, _next) {
   if (err.isJoi) {
     return res
-      .status(StatusCodes.BAD_REQUEST)
+      .status(err.status || StatusCodes.BAD_REQUEST)
       .json({ message: err.details[0].message });
   }
 
