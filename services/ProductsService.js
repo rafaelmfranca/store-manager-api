@@ -22,4 +22,18 @@ async function create({ name, quantity }) {
   };
 }
 
-module.exports = { getAll, getById, create };
+async function update(id, { name, quantity }) {
+  const [product] = await ProductsModel.getById(id);
+
+  if (!product.length) return false;
+
+  await ProductsModel.update(id, name, quantity);
+
+  return {
+    id,
+    name,
+    quantity,
+  };
+}
+
+module.exports = { getAll, getById, create, update };

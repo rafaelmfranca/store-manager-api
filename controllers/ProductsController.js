@@ -48,8 +48,18 @@ router
   )
   .put(
     validateProduct,
-    rescue(async (req, res) => {
-      res.status(StatusCodes.OK).end();
+    rescue(async (req, res, next) => {
+      const { id } = req.params;
+      const updatedProduct = await ProductsService.update(id, req.body);
+
+      if (!updatedProduct) {
+        return next({
+          status: StatusCodes.NOT_FOUND,
+          message: 'Product not found',
+        });
+      }
+
+      res.status(StatusCodes.OK).json(updatedProduct);
     }),
   );
 

@@ -19,4 +19,11 @@ function create(name, quantity) {
   );
 }
 
-module.exports = { getAll, getById, getByName, create };
+function update(id, name, quantity) {
+  return connection.query(
+    'UPDATE products SET name = ?, quantity = ? WHERE id = ?',
+    [name, quantity, id],
+  );
+}
+
+module.exports = { getAll, getById, getByName, create, update };
