@@ -1,4 +1,4 @@
-const { SalesModel } = require('../models');
+const { SalesModel, SalesProductsModel } = require('../models');
 
 function normalize(sale) {
   return {
@@ -22,4 +22,18 @@ async function getById(id) {
   return sale.map(normalize);
 }
 
-module.exports = { getAll, getById };
+async function create(products) {
+  const [sale] = await SalesModel.create();
+
+  await Promise.all(
+    products.map(({ productId, quantity }) =>
+      SalesProductsModel.create(sale.insertId, productId, quantity)),
+  );
+
+  return {
+    id: sale.insertId,
+    itemsSold: products,
+  };
+}
+
+module.exports = { getAll, getById, create };

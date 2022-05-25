@@ -17,7 +17,8 @@ router
   .post(
     validateSale,
     rescue(async (req, res) => {
-      res.status(StatusCodes.CREATED).end();
+      const saleResume = await SalesService.create(req.body);
+      return res.status(StatusCodes.CREATED).json(saleResume);
     }),
   );
 

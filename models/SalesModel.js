@@ -22,4 +22,8 @@ function getById(id) {
     ORDER BY sp.product_id`);
 }
 
-module.exports = { getAll, getById };
+function create() {
+  return connection.query('INSERT INTO sales (date) VALUES (NOW())');
+}
+
+module.exports = { getAll, getById, create };
