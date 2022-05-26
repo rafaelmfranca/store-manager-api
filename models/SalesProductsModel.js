@@ -14,4 +14,11 @@ function update(saleId, productId, quantity) {
   );
 }
 
-module.exports = { create, update };
+function getSalesResumeBySaleId(id) {
+  return connection.query(
+    'SELECT product_id, quantity FROM sales_products WHERE sale_id = ?',
+    id,
+  );
+}
+
+module.exports = { create, update, getSalesResumeBySaleId };

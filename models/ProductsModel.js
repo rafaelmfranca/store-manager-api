@@ -30,4 +30,18 @@ function remove(id) {
   return connection.query('DELETE FROM products WHERE id = ?', id);
 }
 
-module.exports = { getAll, getById, getByName, create, update, remove };
+function updateQuantity(id, quantity, type) {
+  return connection.query(
+    `UPDATE products SET quantity = quantity ${type} ${quantity} WHERE id = ${id}`,
+  );
+}
+
+module.exports = {
+  getAll,
+  getById,
+  getByName,
+  create,
+  update,
+  remove,
+  updateQuantity,
+};

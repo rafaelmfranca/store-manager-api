@@ -1,4 +1,4 @@
-const { SalesModel, SalesProductsModel } = require('../models');
+const { SalesModel, SalesProductsModel, ProductsModel } = require('../models');
 
 function normalize(sale) {
   return {
@@ -26,8 +26,13 @@ async function create(products) {
   const [sale] = await SalesModel.create();
 
   await Promise.all(
-    products.map(({ productId, quantity }) =>
+    products.map(({ productId, quantity }) => 
       SalesProductsModel.create(sale.insertId, productId, quantity)),
+  );
+
+  await Promise.all(
+    products.map(({ productId, quantity }) => 
+      ProductsModel.updateQuantity(productId, quantity, '-')),
   );
 
   return {
@@ -48,6 +53,13 @@ async function update(id, product) {
 }
 
 async function remove(id) {
+  const [salesResume] = await SalesProductsModel.getSalesResumeBySaleId(id);
+
+  await Promise.all(
+    salesResume.map(({ product_id, quantity }) => 
+      ProductsModel.updateQuantity(product_id, quantity, '+')),
+  );
+
   const [sale] = await SalesModel.getById(id);
 
   if (!sale.length) return null;
