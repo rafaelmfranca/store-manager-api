@@ -16,8 +16,16 @@ router
   )
   .post(
     validateSale,
-    rescue(async (req, res) => {
+    rescue(async (req, res, next) => {
       const saleResume = await SalesService.create(req.body);
+
+      if (!saleResume) {
+        return next({
+          status: StatusCodes.UNPROCESSABLE_ENTITY,
+          message: 'Such amount is not permitted to sell',
+        });
+      }
+
       return res.status(StatusCodes.CREATED).json(saleResume);
     }),
   );

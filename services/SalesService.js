@@ -23,6 +23,16 @@ async function getById(id) {
 }
 
 async function create(products) {
+  const promises = await Promise.all(
+    products.map(async ({ productId, quantity }) => {
+      const [product] = await ProductsModel.getById(productId);
+      if (product[0].quantity < quantity) return false;
+      return true;
+    }),
+  );
+  
+  if (promises.includes(false)) return false;
+
   const [sale] = await SalesModel.create();
 
   await Promise.all(
@@ -35,10 +45,7 @@ async function create(products) {
       ProductsModel.updateQuantity(productId, quantity, '-')),
   );
 
-  return {
-    id: sale.insertId,
-    itemsSold: products,
-  };
+  return { id: sale.insertId, itemsSold: products };
 }
 
 async function update(id, product) {
