@@ -112,7 +112,7 @@ describe('✅ ProductsModel.js - update() function\n', () => {
     connection.query.restore();
   });
 
-  describe('when update successfully', () => {
+  describe('when is it updated successfully', () => {
     it('should return an array', async () => {
       const response = await ProductsModel.update(id, name, quantity);
       expect(response).to.be.an('array');
@@ -136,7 +136,7 @@ describe('✅ ProductsModel.js - remove() function\n', () => {
     connection.query.restore();
   });
 
-  describe('when remove successfully', () => {
+  describe('when it is successfully removed', () => {
     it('should return an array', async () => {
       const response = await ProductsModel.remove(id);
       expect(response).to.be.an('array');

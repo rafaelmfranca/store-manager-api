@@ -86,7 +86,7 @@ describe('✅ SalesModel.js - remove() function\n', () => {
     connection.query.restore();
   });
 
-  describe('when remove successfully', () => {
+  describe('when it is successfully removed', () => {
     it('should return an array', async () => {
       const response = await SalesModel.remove(1);
       expect(response).to.be.an('array');
