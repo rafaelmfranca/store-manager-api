@@ -32,4 +32,15 @@ const salesById = [
   },
 ];
 
-module.exports = { sales, salesById };
+const productsToSale = [
+  {
+    productId: 1,
+    quantity: 2,
+  },
+  {
+    productId: 2,
+    quantity: 5,
+  },
+];
+
+module.exports = { sales, salesById, productsToSale };
