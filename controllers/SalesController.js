@@ -41,7 +41,11 @@ router
   .put(
     validateSale,
     rescue(async (req, res) => {
-      res.status(StatusCodes.OK).end();
+      const { id } = req.params;
+      
+      const updatedSaleResume = await SalesService.update(id, req.body);
+
+      res.status(StatusCodes.OK).json(updatedSaleResume);
     }),
   );
 

@@ -7,4 +7,11 @@ function create(saleId, productId, quantity) {
   );
 }
 
-module.exports = { create };
+function update(saleId, productId, quantity) {
+  return connection.query(
+    'UPDATE sales_products SET quantity = ? WHERE sale_id = ? AND product_id = ?',
+    [quantity, saleId, productId],
+  );
+}
+
+module.exports = { create, update };

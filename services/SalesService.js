@@ -36,4 +36,15 @@ async function create(products) {
   };
 }
 
-module.exports = { getAll, getById, create };
+async function update(id, product) {
+  const { productId, quantity } = product[0];
+  
+  await SalesProductsModel.update(id, productId, quantity);
+
+  return {
+    saleId: id,
+    itemUpdated: product,
+  };
+}
+
+module.exports = { getAll, getById, create, update };
