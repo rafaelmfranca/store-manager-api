@@ -17,7 +17,7 @@ async function getAll() {
 async function getById(id) {
   const [sale] = await SalesModel.getById(id);
 
-  if (!sale.length) return null;
+  if (!sale.length) return false;
 
   return sale.map(normalize);
 }
@@ -69,11 +69,11 @@ async function remove(id) {
 
   const [sale] = await SalesModel.getById(id);
 
-  if (!sale.length) return null;
+  if (!sale.length) return false;
 
   await SalesModel.remove(id);
 
   return true;
 }
 
-module.exports = { getAll, getById, create, update, remove };
+module.exports = { getAll, getById, create, update, remove, normalize };
