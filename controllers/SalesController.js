@@ -42,10 +42,26 @@ router
     validateSale,
     rescue(async (req, res) => {
       const { id } = req.params;
-      
+
       const updatedSaleResume = await SalesService.update(id, req.body);
 
       res.status(StatusCodes.OK).json(updatedSaleResume);
+    }),
+  )
+  .delete(
+    rescue(async (req, res, next) => {
+      const { id } = req.params;
+
+      const response = await SalesService.remove(id);
+
+      if (!response) {
+        return next({
+          status: StatusCodes.NOT_FOUND,
+          message: 'Sale not found',
+        });
+      }
+
+      return res.status(StatusCodes.NO_CONTENT).end();
     }),
   );
 

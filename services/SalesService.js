@@ -38,7 +38,7 @@ async function create(products) {
 
 async function update(id, product) {
   const { productId, quantity } = product[0];
-  
+
   await SalesProductsModel.update(id, productId, quantity);
 
   return {
@@ -47,4 +47,14 @@ async function update(id, product) {
   };
 }
 
-module.exports = { getAll, getById, create, update };
+async function remove(id) {
+  const [sale] = await SalesModel.getById(id);
+
+  if (!sale.length) return null;
+
+  await SalesModel.remove(id);
+
+  return true;
+}
+
+module.exports = { getAll, getById, create, update, remove };

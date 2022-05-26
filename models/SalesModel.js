@@ -26,4 +26,8 @@ function create() {
   return connection.query('INSERT INTO sales (date) VALUES (NOW())');
 }
 
-module.exports = { getAll, getById, create };
+function remove(id) {
+  return connection.query('DELETE FROM sales WHERE id = ?', [id]);
+}
+
+module.exports = { getAll, getById, create, remove };
