@@ -213,6 +213,7 @@ describe('✅ ProductsController.js - remove() function\n', () => {
   describe('when product exists in the DB', () => {
     before(() => {
       res.status = sinon.stub().returns(res);
+      res.end = sinon.stub().returns();
       next = sinon.stub().returns();
 
       sinon.stub(ProductsService, 'remove').resolves(true);
