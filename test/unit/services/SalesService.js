@@ -196,6 +196,7 @@ describe('✅ SalesService.js - remove() function\n', () => {
       SalesModel.getById.restore();
       ProductsModel.updateQuantity.restore();
       SalesProductsModel.getSalesResumeBySaleId.restore();
+      SalesModel.remove.restore();
     });
 
     it('should return a boolean', async () => {
