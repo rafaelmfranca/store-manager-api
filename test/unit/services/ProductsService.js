@@ -167,7 +167,7 @@ describe('✅ ProductsService.js - remove() function\n', () => {
 
   describe('when is it successfully removed', () => {
     before(() => {
-      const result = [{ insertId: 1 }, []];
+      const result = [{ affectedRows: 1 }, []];
       sinon.stub(ProductsModel, 'getById').resolves([[testProduct]]);
       sinon.stub(ProductsModel, 'remove').resolves(result);
     });

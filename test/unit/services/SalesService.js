@@ -1,9 +1,15 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
+const { productsRouter } = require('../../../controllers');
 const connection = require('../../../db/connection');
-const { SalesModel, SalesProductsModel } = require('../../../models');
+const {
+  SalesModel,
+  SalesProductsModel,
+  ProductsModel,
+} = require('../../../models');
 const { SalesService } = require('../../../services');
 const { sales, salesById, productsToSale } = require('../../__mocks__/sales');
+const { saleResume } = require('../../__mocks__/salesProducts');
 
 describe('✅ SalesService.js - normalize() function\n', () => {
   describe('when executed', () => {
@@ -158,31 +164,38 @@ describe('✅ SalesService.js - update() function\n', () => {
 describe('✅ SalesService.js - remove() function\n', () => {
   describe('when sale does not exists in the DB', () => {
     before(() => {
+      sinon.stub(SalesProductsModel, 'getSalesResumeBySaleId').resolves([[]]);
       sinon.stub(SalesModel, 'getById').resolves([[]]);
     });
 
     after(() => {
       SalesModel.getById.restore();
+      SalesProductsModel.getSalesResumeBySaleId.restore();
     });
 
     it('should return a boolean', async () => {
       const response = await SalesService.remove(1);
       expect(response).to.be.a('boolean');
     });
-
     it('the boolean has to be false', async () => {
       const response = await SalesService.remove(1);
       expect(response).to.be.false;
     });
   });
-
   describe('when sale exists in the DB', () => {
     before(() => {
+      sinon
+        .stub(SalesProductsModel, 'getSalesResumeBySaleId')
+        .resolves([saleResume]);
+      sinon.stub(ProductsModel, 'updateQuantity').resolves();
       sinon.stub(SalesModel, 'getById').resolves([salesById]);
+      sinon.stub(SalesModel, 'remove').resolves();
     });
 
     after(() => {
       SalesModel.getById.restore();
+      ProductsModel.updateQuantity.restore();
+      SalesProductsModel.getSalesResumeBySaleId.restore();
     });
 
     it('should return a boolean', async () => {
